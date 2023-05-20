@@ -1,0 +1,54 @@
+plugins {
+	id 'java'
+	id 'war'
+	// eclipse id added
+	id 'eclipse-wtp'
+	id 'org.springframework.boot' version '3.0.6'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://www.datanucleus.org/downloads/maven2/"}
+}
+
+eclipse {
+    wtp {
+        facet {
+            facet name: 'jst.web', version: '5.0' // Servlet Spec Version 지정
+            facet name: 'jst.java', version: '17' // Java Version 지정, 17
+        }
+    }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	// https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8
+	implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '23.2.0.0'
+	
+	// JSP 설정  필수적으로 작성해야함. 
+    compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
+    implementation group: 'jakarta.servlet.jsp.jstl', name: 'jakarta.servlet.jsp.jstl-api', version: '3.0.0'
+    implementation group: 'org.glassfish.web', name: 'jakarta.servlet.jsp.jstl', version: '3.0.1'
+    implementation group: 'org.apache.tomcat', name: 'tomcat-jasper', version: '11.0.0-M4'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

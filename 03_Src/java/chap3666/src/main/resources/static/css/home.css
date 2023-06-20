@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.hi {
+	border: sold pink;
+	background-color: #E7631C;
+	border-radius: 15%;
+	text-decoration: none;
+}
+.hi:hover {	
+	background-color: #A0E71C;
+}

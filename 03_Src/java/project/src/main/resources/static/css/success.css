@@ -1,0 +1,28 @@
+@charset "UTF-8";
+	
+h1 {
+	text-align: center;
+	
+}
+
+.bigdiv {
+	margin: 40px;
+	padding: 40px;
+	border: solid black;
+	
+}
+hr.nonhr {
+	clear: both;
+    visibility: hidden;
+}
+
+button {
+	border: none;
+	background: none;
+	border-radius: 50%;
+}
+a.hi {
+	text-decoration: none;
+	padding: 0;
+	position: inherit;
+}

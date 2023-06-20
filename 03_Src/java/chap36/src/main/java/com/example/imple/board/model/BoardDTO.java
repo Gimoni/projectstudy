@@ -1,15 +1,9 @@
 package com.example.imple.board.model;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.boot.autoconfigure.batch.BatchDataSource;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.example.standard.model.Modelable;
+import org.hibernate.validator.constraints.Range;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,10 +16,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
-public class BoardDTO {
+public class BoardDTO  {
+    
+    private Board board;
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+	
 	@NotNull
 	long id;
 	
+	@NotNull
 	@NotBlank
 	@Length(min=1, max=100)
 	String title;
@@ -33,13 +39,9 @@ public class BoardDTO {
 	@Length(min=0, max = 4000)
 	String content;
 	
-	@DateTimeFormat()
-	@BatchDataSource
 	Date day;
 	
 	@Length(max=20)
-	Integer reply;
-	
 	String writer;
 
 
@@ -48,8 +50,7 @@ public class BoardDTO {
 						.id(id)
 						.title(title)
 						.content(content)
-						.day(day)
-						.reply(reply)
+						.day(new java.sql.Date(day.getTime()))
 						.writer(writer)
 						.build();
 	}

@@ -1,0 +1,27 @@
+@charset "UTF-8";
+.hi {
+	border: sold pink;
+	background-color: white;
+	border-radius: 15%;
+	text-decoration: none;
+}
+.hi a {
+	text-align: right;
+}
+.hi:hover {	
+	
+	background-color: #A0E71C;
+}
+
+hr {
+    clear: both;
+    visibility: hidden;
+}
+
+h1 {
+	text-align: center;
+}
+
+div.box {
+	background-image: url("img/omg.png");
+}

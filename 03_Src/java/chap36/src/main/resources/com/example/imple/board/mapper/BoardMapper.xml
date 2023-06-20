@@ -6,88 +6,21 @@
     <result property="title" column="title"/>
     <result property="content" column="content"/>
     <result property="day" column="day"/>
-    <result property="writer" column="writer"/>
-  </resultMap>
+    <result property="writer" column="writer" jdbcType="VARCHAR" />
+</resultMap>
 
-<!--     <select id="selectAll" > -->
-<!--         select * from board order by id desc -->
-<!--     </select> -->
-    
-<!--     <select id="selectAllWithReplyCount" > -->
-<!-- 		SELECT p.*, COUNT(r.reply) AS reply -->
-<!-- 		FROM board p -->
-<!-- 		LEFT JOIN board r ON p.id = r.id -->
-<!-- 		GROUP BY p.id, p.title, p.content, p.day, p.reply, p.writer -->
-<!-- 		ORDER BY p.id DESC; -->
-<!--     </select> -->
-    
-<!--     <select id="countAll" resultType="int"> -->
-<!--         select count(*) from board -->
-<!--     </select> -->
-
-<!--     <select id="selectPostByWriter" > -->
-<!--         select * from board where writer=#{writer} -->
-<!--     </select> -->
-    
-<!--     <select id="selectPostByTitle" > -->
-<!--         select * from board where title LIKE CONCAT('%', #{title}) -->
-<!--     </select> -->
-    
-<!--     <select id="selectPostById"> -->
-<!--         select * from board where id = #{id} -->
-<!--     </select> -->
-    
-<!--     <select id="selectIdByWriterAndDay" resultType="java.lang.Integer"> -->
-<!--         select id from board where writer = #{writer} and day = #{day} -->
-<!--     </select> -->
-    
-<!--     <select id="selectIdByWriter" resultType="java.lang.Integer"> -->
-<!--         SELECT id -->
-<!--         FROM ( -->
-<!--           SELECT id -->
-<!--           FROM board -->
-<!--           WHERE writer = #{writer} -->
-<!--           ORDER BY id DESC -->
-<!--         ) WHERE ROWNUM = 1 -->
-<!--     </select> -->
-    
-<!--     <select id="selectByKeyword" > -->
-<!--         select * from board -->
-<!--         where title like CONCAT('%', #{keyword}, '%') or writer like CONCAT('%', #{keyword}, '%') -->
-<!--     </select> -->
-    
-<!--     <select id="selectCountByKeyword" resultType="int"> -->
-<!--         select count(*) from board -->
-<!--         where title like CONCAT('%', #{keyword}, '%') or writer like CONCAT('%', #{keyword}, '%') -->
-<!--     </select> -->
-    
-<!--     <insert id="insertPost" > -->
-<!--         insert into board (title, content) values (#{title}, #{content}) -->
-<!--     </insert> -->
-    
-<!--     <delete id="deletePost"> -->
-<!--         delete from board where id = #{id} -->
-<!--     </delete> -->
-    
-<!--     <update id="updatePostById" > -->
-<!--         update board -->
-<!--         set title = #{title, jdbcType = VARCHAR}, -->
-<!--             content = #{content, jdbcType = VARCHAR} -->
-<!--         where id = #{id} -->
-<!--     </update> -->
- 
-<!-- <insert id="insertPost"> -->
-<!--     <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE"> -->
-<!--         select board_seq.nextval from dual -->
-<!--     </selectKey> -->
-<!--     insert into board (title, content, day, writer) -->
-<!--     values ( -->
-<!--         #{p.id}, -->
-<!--         #{p.title, jdbcType=VARCHAR}, -->
-<!--         #{p.content, jdbcType=VARCHAR}, -->
-<!--         #{p.day, jdbcType=DATE}, -->
-<!--         #{p.writer, jdbcType=VARCHAR} -->
-<!--     ) -->
-<!-- </insert> -->
+<insert id="insertBoard">
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+        select board_seq.nextval from dual
+    </selectKey>
+    insert into board (title, content, day, writer)
+    values (
+        #{b.id},
+        #{b.title},
+        #{b.content},
+        #{b.day, jdbcType=DATE},
+        #{b.writer}
+    )
+</insert>
 
 </mapper>

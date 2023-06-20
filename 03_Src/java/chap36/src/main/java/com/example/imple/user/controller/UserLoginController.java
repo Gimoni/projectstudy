@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserLoginController {
-	
+
 	@GetMapping("/login")
 	void login() {
-		
+		System.out.println("login()...");		
 	}
 	
 	@PostMapping("/login-fail")
 	String loginFail() {
-		
-		return "user/login";
+		System.out.println("loginFail()...");
+		System.out.println("login실패");
+		return "user/login"; 
 	}
-
+	
 }

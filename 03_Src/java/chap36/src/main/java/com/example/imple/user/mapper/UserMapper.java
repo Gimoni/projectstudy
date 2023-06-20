@@ -2,10 +2,12 @@ package com.example.imple.user.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.imple.user.model.User;
 
@@ -78,6 +80,34 @@ public interface UserMapper {
 
 	
 //	public void insertUser (User user);
+	
+//	@Update("""
+//			update users
+//			   set password	 = #{password, jdbcType=VARCHAR2},
+//			       name		 = #{name, jdbcType=VARCHAR2},
+//			       mobile	 = #{mobile, jdbcType=VARCHAR2},
+//			       role      = #{role, jdbcType=VARCHAR2},
+//			 where id        = #{id, jdbcType=VARCHAR2}
+//			""")
+
+
+	@Delete ("""
+			delete from users
+			where id = #{id}
+			""")
+	String deleteUserbyId(String id);
+	
+	@Update("""
+			update users 
+		         set password = #{password},
+			          name = #{name},
+			          mobile = #{mobile},
+			          role = #{role}
+			  where id = #{id}
+			""")
+	void updateUser(String user);
+
+
 	
 	
 }

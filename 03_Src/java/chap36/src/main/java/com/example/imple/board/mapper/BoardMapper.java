@@ -7,8 +7,10 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.type.JdbcType;
 
 import com.example.imple.board.model.Board;
 
@@ -19,34 +21,39 @@ public interface BoardMapper {
     List<Board> selectAll();
     
     @Select("""
-    		SELECT p.*, COUNT(r.reply) AS reply
-			FROM board p
-			LEFT JOIN board r ON p.id = r.id
-			GROUP BY p.id, p.title, p.content, p.day, p.reply, p.writer
-			ORDER BY p.id DESC
+    		SELECT p.*, COUNT(c.id) AS comment
+			FROM board b
+			LEFT JOIN board c ON b.id = c.id
+			GROUP BY b.id, b.title, b.content, b.day, b.writer
+			ORDER BY b.id DESC
     		""")
-    List<Board> selectAllWithReplyCount();
+    List<Board> selectAllWithCommentCount();
     
     @Select("select count(*) from board")
     int countAll();
 
-    @Select("select * from freeboard_post where writer=#{writer}")
-    Board selectPostByWriter(String writer);
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
+    @Select("select * from board where writer=#{writer}")
+    Board selectBoardByWriter(String writer);
     
-    @Select("select * from freeboard_post where title LIKE '%#{title}'")
-    Board selectPostByTitle(String title);
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
+    @Select("select * from board where title LIKE '%${title}'")
+    Board selectBoardByTitle(String title);
     
-    @Select("select * from freeboard_post where id = #{id}")
-    Board selectPostById(int id);
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
+    @Select("select * from board where id = #{id}")
+    Board selectBoardById(int id);
     
-    @Select("select id from freeboard_post where writer = #{writer} and day = #{day}")
-    Integer selectIdByWriterAndDay(@Param("writer") String writer, @Param("day") Date day);
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
+    @Select("select id from board where writer = #{writer} and day = #{day}")
+    Board selectIdByWriterAndDay(@Param("writer") String writer, @Param("day") Date day);
     
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
     @Select("""
     		SELECT id
 			FROM (
 			  SELECT id
-			  FROM freeboard_post
+			  FROM board
 			  WHERE writer = #{writer}
 			  ORDER BY id DESC
 			) WHERE ROWNUM = 1
@@ -54,31 +61,56 @@ public interface BoardMapper {
     Integer selectIdByWriter(@Param("writer") String writer);
     
     @Select("""
-    		select * from freeboard_post
+    		select * from board
     		where title like '%' || #{keyword} || '%' or writer like '%' || #{keyword} || '%' 
     		""")
     List<Board> selectByKeyword(@Param("keyword") String keyword);
     
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
     @Select("""
-    		select count(*) from freeboard_post
+    		select count(*) from board
     		where title like '%' || #{keyword} || '%' or writer like '%' || #{keyword} || '%' 
     		""")
     int selectCountByKeyword(@Param("keyword") String keyword);
     
 
+  
+
+	/*
+	 * @Insert(""" insert into board (id, title, content, day, writer) values (
+	 * #{b.id}, #{b.title, jdbcType=VARCHAR}, #{b.content, jdbcType=VARCHAR},
+	 * #{b.day, jdbcType=VARCHAR}, #{b.writer, jdbcType=VARCHAR}) """)
+	 */
+    int insertBoard(@Param("b") Board board);
     
-    @Insert("INSERT INTO board (id, title, content, day, reply, writer) " +
-            "VALUES (board_seq.nextval, #{p.title}, #{p.content}, #{p.day}, #{p.reply}, #{p.writer})")
-    int insertPost(@Param("p") Board post);
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
+    @Delete("delete board where id = #{id}")
+    int deleteBoard(int id);
     
-    @Delete("delete freeboard_post where id = #{id}")
-    int deletePost(int id);
-    
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
     @Update("""
-    		update freeboard_post
-    		set title = #{p.title, jdbcType = VARCHAR},
-    			content = #{p.content, jdbcType = VARCHAR}
+    		update board
+    		set title = #{b.title, jdbcType = VARCHAR},
+    			content = #{b.content, jdbcType = VARCHAR},
+    			writer = #{b.writer, jdbcType=VARCHAR}
     		where id = #{id}
     		""")
-    int updatePostById(@Param("p") Board post, @Param("id") int id);
+    int updateBoardById(@Param("b") Board board, @Param("id") int id);
+
+    @Result(property = "writer", column = "writer", jdbcType = JdbcType.VARCHAR)
+    @Insert("""
+    	        insert into board (id, title, content, day, writer)
+    			values (board_seq.nextval, #{b.title, jdbcType=VARCHAR},
+            #{b.content, jdbcType=VARCHAR}, #{b.day, jdbcType=VARCHAR},
+            #{b.writer, jdbcType=VARCHAR})
+    	    """)
+    	int insertBoardByAutoId(@Param("b") Board board);
+
+	
+    @Select("""
+    		select max(id) from board
+    		""")
+    int getMaxBoardId();
+
+
 }

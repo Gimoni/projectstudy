@@ -18,7 +18,32 @@
 <body>
 <div class= "box">
 <h1>Board list / 게시판 목록</h1>
-
+<section class="container">
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>title</th>
+				<th>content</th>
+				<th>day</th>
+				<th>writer</th>
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach var="b" items="${list}">
+			<tr>
+				<td><a href="/board/detail/${b.id}">${b.id}</a></td>
+<%-- 				<td><a href="/emp/detail/${e.empno}">${e.ename}</a></td> --%>
+				<td>${b.title}</td>
+				<td>${b.content}</td>
+				<td>${b.day}</td>
+				<td >${b.writer}</td>
+<%-- 				<td align="right">${e.comm}</td> --%>
+			</tr>
+		</c:forEach>
+		</tbody>
+	</table>
+</section>
 </div>
 </body>
 </html>

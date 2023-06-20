@@ -1,5 +1,6 @@
 package com.example.imple.board.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +17,6 @@ public class Board {
 	String title;
 	String content;
 	Date day;
-	Integer reply;
+	Integer comment;
 	String writer;
 }

@@ -1,12 +1,22 @@
 package com.example.imple.board.controller;
 
+import java.util.Date;
+import java.util.Objects;
+
+import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.imple.board.comment.mapper.CommentMapper;
 import com.example.imple.board.mapper.BoardMapper;
-import com.example.imple.board.reply.mapper.BoardReplyMapper;
+import com.example.imple.board.reply.mapper.ReplyMapper;
+import com.example.imple.board.reply.model.ReplyDTO;
 import com.example.standard.controller.DetailController;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,17 +30,41 @@ public class BoardDetailController implements DetailController<Integer> {
 	@Autowired
 	BoardMapper mapper;
 	
-//	@Autowired
-//	BoardReplyMapper replyMapper;
-	
+	@Autowired
+	CommentMapper comapper;
+
 	@Override
+	@Transactional
 	public String detail(Integer key, Model model, HttpServletRequest request) {
-		log.debug("key : {},", key);
-		var post = mapper.selectPostById(key);
-		model.addAttribute("post", post);
-//		var reply = replyMapper.selectAll(post.getId());
-//		model.addAttribute("reply", reply);
+		var board = mapper.selectBoardById(key);
+		model.addAttribute("board", board);
+		var comment = comapper.selectAll(board.getId());
+		model.addAttribute("comment", comment);
+		var session = request.getSession();
 		
+		var error = request.getParameter("error");
+		if (Objects.isNull(error)) {
+			session.removeAttribute("board");
+			session.removeAttribute("comment");
+		}
+		String getDeleteId = request.getParameter("deleteId");
+		if (getDeleteId != null && !getDeleteId.isEmpty()) {
+			int deleteId = Integer.parseInt(getDeleteId);
+			comapper.deleteCommentbyId(deleteId);
+			int commentss =comapper.countByid(deleteId);
+			System.out.println(commentss);
+			if (commentss==0) {
+				mapper.deleteBoard(deleteId);
+			}
+			return "redirect:/board/page/1/10";
+		}
+		String getDeleteCommentId = request.getParameter("deleteCommentId");
+		String pageNum = request.getParameter("page");
+		if (getDeleteCommentId != null && !getDeleteCommentId.isEmpty()) {
+			int deleteCommentId = Integer.parseInt(getDeleteCommentId);
+			comapper.deleteCommentbyBoardId(deleteCommentId);
+			return "redirect:/board/detail/{key}?page=" + pageNum;
+		}
 		return "board/detail";
 	}
 

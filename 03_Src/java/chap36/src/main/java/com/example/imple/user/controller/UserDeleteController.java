@@ -32,6 +32,7 @@ public class UserDeleteController implements DeleteController<UserDTO>{
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	
 	@Override
 	public void delete(Model model, HttpServletRequest request) {
 		var error = request.getParameter("error");
@@ -41,8 +42,13 @@ public class UserDeleteController implements DeleteController<UserDTO>{
 			session.removeAttribute("binding");
 		}
 		
+		var id = request.getParameter("id");
 		
-	}
+			var user = mapper.selectById(id);
+			model.addAttribute("user", user);
+		}
+		
+	
 
 	@Override
 	public String delete(@Valid UserDTO dto, BindingResult binding, Model model, HttpServletRequest request,

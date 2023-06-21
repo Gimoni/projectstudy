@@ -2,10 +2,13 @@
 
 .hi {
 	border: sold pink;
-	background-color: #E7631C;
+	background-color: rgb(255, 128, 0);
 	border-radius: 15%;
 	text-decoration: none;
+	text-color: white;
+	opacity: 30%;
 }
 .hi:hover {	
-	background-color: #A0E71C;
+	background-color: rgb(242, 113, 17);
+	opacity: 100%;
 }

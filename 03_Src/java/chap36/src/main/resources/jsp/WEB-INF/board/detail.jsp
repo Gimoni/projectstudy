@@ -37,10 +37,10 @@
 		</tbody>
 	</table>
 		<hr>
-	<menu class="btn-group">
-		<a href="/board/update?id=${board.id}" class="btn btn-secondary">수정</a>
-		<a href="/board/delete?id=${board.id}" class="btn btn-danger">삭제</a>
-	</menu>
+<!-- 	<menu class="btn-group"> -->
+<%-- 		<a href="/board/update?id=${board.id}" class="btn btn-secondary">수정</a> --%>
+<%-- 		<a href="/board/delete?id=${board.id}" class="btn btn-danger">삭제</a> --%>
+<!-- 	</menu> -->
 	<hr>
 <!-- 	<ul> -->
 <!-- 		<li><a href="/emp/create">/emp/create</a></li> -->

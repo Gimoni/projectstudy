@@ -10,11 +10,13 @@
 <meta charset="UTF-8">
 <meta http-equiv="Coche-Control" content="no-store">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/img/heart_like_love_icon.png"> 
-	
+<link rel="icon" type="image/x-icon"href="/bootstrap/assets/favicon.ico""> 
 <link rel="stylesheet" type="text/css" href="/css/home.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
 <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.css">
 <script src="/webjars/bootstrap/5.2.3/js/bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/webjars/jquery/jqurey.min.js"></script>
 
 <title>home.jsp</title>
@@ -35,7 +37,7 @@
 <!-- <h1>HELLO PEOPLE</h1> -->
 <hr class="nonhr">
 <div class="container-fluid p-5 bg-danger text-white text-center">
-	  <h1>World Music</h1>
+	  <h1>World Music web</h1>
 	  <div class="d-flex justify-content-end">
 	  <p><sec:authorize access="isAuthenticated()">
 	&nbsp; Hello ! Login User : &nbsp; <sec:authentication property="name"/> <br>How are you today?!
@@ -48,26 +50,28 @@
   
     <!-- header : semantic tag (element 의 이름이 목적을 의미한다.) -->
   <!-- nav: navigation, 메뉴 -->
-  <nav>
-    <h2>menu</h2>
-    <ul>
-      <li>
-        <a href="">info</a>
-      </li>
-      <li>
-        <a href="">part</a>
-      </li>
-      <li>
-        <a href="">us</a>
-      </li>
-      <li>
-        <a href="">board</a>
-      </li>
-      <li>
-        <a href="">more</a>
-      </li>
-    </ul>
-  </nav> 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 	<asid id="secondary" class="secondary-widget-area">
 	<div class="widget fb-social-widget-1">

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.imple.board.mapper.BoardMapper;
+import com.example.imple.board.model.Board;
 import com.example.imple.board.model.BoardDTO;
 import com.example.standard.controller.CreateController;
 
@@ -46,16 +47,17 @@ public class BoardCreateController implements CreateController<BoardDTO> {
         session.setAttribute("board", dto);
         session.setAttribute("binding", binding);
         int maxId = mapper.getMaxBoardId();
-        int newId = maxId + 1;
+        
 
         var writer = (String) session.getAttribute("writer");
+        long id = maxId;
         var day = new Date();
 
         if (binding.hasErrors()) {
             return "redirect:/board/create?error";
         }
 
-        var board = dto.getModel(writer, new java.sql.Date(day.getTime()));
+        var board = dto.getModel( writer, new java.sql.Date(day.getTime()));
 
         try {
             mapper.insertBoard(board);
@@ -64,7 +66,7 @@ public class BoardCreateController implements CreateController<BoardDTO> {
             return "redirect:/board/create?error";
         }
 
-        int id = mapper.selectIdByWriter(writer);
+       
 		return "redirect:/board/detail/" + id + "?page=1";
     }
 

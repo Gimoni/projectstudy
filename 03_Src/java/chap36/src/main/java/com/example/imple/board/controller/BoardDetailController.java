@@ -1,22 +1,15 @@
 package com.example.imple.board.controller;
 
-import java.util.Date;
 import java.util.Objects;
 
-import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.imple.board.comment.mapper.CommentMapper;
 import com.example.imple.board.mapper.BoardMapper;
-import com.example.imple.board.reply.mapper.ReplyMapper;
-import com.example.imple.board.reply.model.ReplyDTO;
 import com.example.standard.controller.DetailController;
 
 import jakarta.servlet.http.HttpServletRequest;

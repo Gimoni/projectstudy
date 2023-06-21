@@ -92,10 +92,9 @@ public interface UserMapper {
 
 
 	@Delete ("""
-			delete from users
-			where id = #{id}
+			delete users where id = #{id}
 			""")
-	String deleteUserbyId(String id);
+    String deleteUserbyId(String id);
 	
 	@Update("""
 			update users 

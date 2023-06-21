@@ -1,9 +1,12 @@
 package com.example.imple.board.controller;
 
+import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.imple.board.comment.mapper.CommentMapper;
@@ -40,6 +43,9 @@ public class BoardListController implements ListController{
 	}
 
 
+//	@GetMapping("/detail/{id}/{page}/{createReply}")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	@Transactional
 	public String page(int pageNum, int pageSize, Model model, HttpServletRequest request) {
 	
 			String getDeleteId = request.getParameter("deleteId");

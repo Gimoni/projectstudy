@@ -93,11 +93,10 @@ public class UserMapperTest {
 	
 	@Test
 	void deleteUserbyid() {
-		var list = usermapper.selectAll();
-		System.out.println(list);
-		String id = usermapper.deleteUserbyId("gimon");
-		var list2= usermapper.selectAll();
-		System.out.println(list2);
+		
+		String potato = usermapper.deleteUserbyId("감자돌이");
+	
+		
 	}
 	
 

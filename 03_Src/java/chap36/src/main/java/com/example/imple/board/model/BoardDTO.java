@@ -4,7 +4,11 @@ import java.sql.Date;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.imple.board.mapper.BoardMapper;
+
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,6 +22,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BoardDTO  {
     
+	@Autowired
+	BoardMapper mapper;
+	
     private Board board;
 
     public Board getBoard() {
@@ -29,7 +36,8 @@ public class BoardDTO  {
     }
 	
 	@NotNull
-	long id;
+	@Range(min=1, max=9999999999L)
+	Long id;
 	
 	@NotNull
 	@NotBlank
@@ -41,11 +49,12 @@ public class BoardDTO  {
 	
 	Date day;
 	
-	@Length(max=20)
+	@Length(min=0, max=20)
 	String writer;
 
 
 	public Board getModel(String writer, Date day) {
+
 		return Board.builder()
 						.id(id)
 						.title(title)
@@ -54,5 +63,7 @@ public class BoardDTO  {
 						.writer(writer)
 						.build();
 	}
+
+	
 	
 }

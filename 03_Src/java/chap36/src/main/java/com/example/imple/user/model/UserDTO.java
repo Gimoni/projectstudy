@@ -21,7 +21,7 @@ public class UserDTO implements Modelable<User>{
 	
 	
 	@NonNull 
-	@Length(max=20)
+	@Length(min=1, max=20)
 	String id;
 	
 	@NonNull 
